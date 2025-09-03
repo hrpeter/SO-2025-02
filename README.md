@@ -1,7 +1,7 @@
 # SO-2025-02 - Simulador de Escalonamento de Processos - Round Robin com Feedback
 **Universidade Feevale | Curso de Sistemas Operacionais – Grupo 03**
 
-**Integrantes:** Herik Rafael Peter da Silva, Mateus Piva e Augusto [Último sobrenome]
+**Integrantes:** Herik Rafael Peter da Silva, Mateus Piva e Augusto Barcelos Seibel
 
 Simulador de Escalonamento de Processos baseado no algoritmo Round Robin com Feedback, desenvolvido em Java (sem orientação a objetos). Simula múltiplas filas de prioridade, operações de I/O e preempção de processos conforme regras de escalonamento.
 
