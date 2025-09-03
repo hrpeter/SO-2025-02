@@ -2,9 +2,9 @@ import java.util.*;
 
 public class manualSimuladorRRFeedback {
     
-    static int QUANTUM;         // definido pelo usuário
-    static int MAX_PROCESSOS;   // definido pelo usuário
-    static int CICLOS_MAX;      // definido pelo usuário
+    static int QUANTUM;
+    static int MAX_PROCESSOS;
+    static int CICLOS_MAX;
 
     static final int TEMPO_IO_DISCO = 6;
     static final int TEMPO_IO_FITA = 8;
@@ -15,11 +15,11 @@ public class manualSimuladorRRFeedback {
 
     static class PCB {
         int pid;
-        int prioridade; // 1 = alta, 0 = baixa
+        int prioridade;
         int tempoRestanteCPU;
         String tipoIO;
         int tempoIO;
-        String estado; // "pronto", "executando", "bloqueado", "finalizado"
+        String estado;
     }
 
     static Queue<PCB> filaAlta = new LinkedList<>();
@@ -30,7 +30,6 @@ public class manualSimuladorRRFeedback {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // 🔹 Definições pelo usuário
         System.out.print("Digite o número máximo de processos: ");
         MAX_PROCESSOS = scanner.nextInt();
 
@@ -42,7 +41,6 @@ public class manualSimuladorRRFeedback {
 
         gerarProcessosIniciais();
 
-        // 🔹 Loop principal
         while (tempoGlobal < CICLOS_MAX && finalizados.size() < MAX_PROCESSOS) {
             System.out.println("\n[CICLO " + tempoGlobal + "]");
             
@@ -62,8 +60,8 @@ public class manualSimuladorRRFeedback {
         for (int i = 0; i < MAX_PROCESSOS; i++) {
             PCB p = new PCB();
             p.pid = proximoPID++;
-            p.prioridade = 1; // inicia na fila de alta prioridade
-            p.tempoRestanteCPU = rand.nextInt(6) + 5; // entre 5 e 10
+            p.prioridade = 1;
+            p.tempoRestanteCPU = rand.nextInt(6) + 5;
             p.estado = "pronto";
             p.tipoIO = gerarTipoIOAleatorio(rand);
             p.tempoIO = 0;
@@ -104,7 +102,6 @@ public class manualSimuladorRRFeedback {
             finalizados.add(processo);
             System.out.println("Processo PID " + processo.pid + " finalizado.");
         } else {
-            // Simula decisão aleatória de I/O
             boolean requisitaIO = new Random().nextBoolean();
             if (requisitaIO) {
                 processo.estado = "bloqueado";
@@ -113,7 +110,7 @@ public class manualSimuladorRRFeedback {
                 System.out.println("Processo PID " + processo.pid + " requisitou I/O (" + processo.tipoIO + ")");
             } else {
                 processo.estado = "pronto";
-                processo.prioridade = 0; // vai para fila baixa (preempção)
+                processo.prioridade = 0;
                 filaBaixa.add(processo);
                 System.out.println("Processo PID " + processo.pid + " preemptado e movido para fila de baixa prioridade.");
             }
@@ -134,7 +131,6 @@ public class manualSimuladorRRFeedback {
             filaIO.remove(p);
             p.estado = "pronto";
 
-            // Decisão da fila de retorno
             if (p.tipoIO.equals("disco")) {
                 p.prioridade = 0;
                 filaBaixa.add(p);
@@ -153,6 +149,6 @@ public class manualSimuladorRRFeedback {
             case "fita": return TEMPO_IO_FITA;
             case "impressora": return TEMPO_IO_IMPRESSORA;
         }
-        return 6; // default
+        return 6;
     }
 }
